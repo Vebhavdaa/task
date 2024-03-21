@@ -24,6 +24,12 @@ describe("MenuHeader component", () => {
     expect(setStartMock).toHaveBeenCalledWith(0);
     expect(setEndMock).toHaveBeenCalledWith(5);
 
+    fireEvent.click(newButton);
+
+    expect(setApiMock).toHaveBeenCalledTimes(1);
+    expect(setStartMock).toHaveBeenCalledTimes(1);
+    expect(setEndMock).toHaveBeenCalledTimes(1);
+
     fireEvent.click(pastButton);
     expect(setApiMock).toHaveBeenCalledWith('https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty');
   });
