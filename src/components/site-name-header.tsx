@@ -3,10 +3,10 @@ import headerlogo from '../asset/hackernews-header.svg';
 
 function SiteNameHeader() {
   return (
-    <AppBar position="sticky" data-testid="site-name-header" style={{ backgroundColor: '#ffffff', boxShadow: '0px 3px 28px 0px #00000014' }}>
+    <AppBar data-testid="site-appbar" position="sticky" style={{ backgroundColor: '#ffffff', boxShadow: '0px 3px 28px 0px #00000014' }}>
       <Toolbar>
-        <Typography variant="h6" component="div" className="site-name">
-          <img src={headerlogo} alt="headerlogo" className="header-logo" />
+        <Typography variant="h6" component="div" style={{ flexGrow: 1, textAlign: 'center' }}>
+          <img src={headerlogo} alt="headerlogo" style={{width: '166px', height: '19px'}} data-testid="site-logo" />
         </Typography>
       </Toolbar>
     </AppBar>

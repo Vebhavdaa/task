@@ -1,17 +1,20 @@
 import { render } from '@testing-library/react';
 import SiteNameHeader from './site-name-header';
 
-describe('SiteNameHeader component', () => {
-  it('renders the header with the correct logo image', () => {
-    const { getByAltText } = render(<SiteNameHeader />);
-    const logoImage = getByAltText('headerlogo');
-    expect(logoImage).toBeInTheDocument();
+describe('SiteNameHeader', () => {
+  test('renders site name logo', () => {
+    const { getByTestId } = render(<SiteNameHeader />);
+    const siteNameLogo = getByTestId('site-logo');
+    expect(siteNameLogo).toBeInTheDocument();
   });
 
-  it('renders the header with the correct styles', () => {
+  test('renders app bar with correct background color and box shadow', () => {
     const { getByTestId } = render(<SiteNameHeader />);
-    const appBar = getByTestId('site-name-header');
-    expect(appBar).toHaveStyle('background-color: #ffffff');
-    expect(appBar).toHaveStyle('box-shadow: 0px 3px 28px 0px #00000014');
+    const appBar = getByTestId('site-appbar'); 
+    expect(appBar).toBeInTheDocument();
+    expect(appBar).toHaveStyle({
+      backgroundColor: '#ffffff',
+      boxShadow: '0px 3px 28px 0px #00000014',
+    });
   });
 });

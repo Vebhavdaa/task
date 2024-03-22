@@ -21,14 +21,12 @@ describe('NewsCard component', () => {
 
     const descriptionElement = getByTestId('news-description');
     expect(descriptionElement).toBeInTheDocument();
+    expect(descriptionElement.textContent).not.toBeNull(); 
+
+    expect(descriptionElement.textContent?.trim()).toBe('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.');
 
     const metadataElement = getByTestId('news-metadata');
     expect(metadataElement).toBeInTheDocument();
-
-    const expectedTimestampRegex = /\d{1,2}\/\d{1,2}\/\d{4}, \d{1,2}:\d{2}:\d{2} (AM|PM)/;
-    expect(metadataElement.textContent).toMatch(expectedTimestampRegex);
-
-    const expectedScoreRegex = new RegExp(`${mockNews.score} Comments`);
-    expect(metadataElement.textContent).toMatch(expectedScoreRegex);
+    expect(metadataElement.textContent).toContain('3/18/2021, 6:30:00 PM | 10 Comments');
   });
 });

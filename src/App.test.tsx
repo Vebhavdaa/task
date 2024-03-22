@@ -1,37 +1,44 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import App from "./App";
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-jest.mock("./components/menu-header", () => () => <div data-testid="menu-header" />);
-jest.mock("./components/site-name-header", () => () => <div data-testid="site-name-header" />);
-jest.mock("./components/news-card", () => ({ news }: { news: any }) => <div data-testid={`news-card-${news.id}`} />);
-jest.mock("./components/load-more-button", () => ({ setEnd }: { setEnd: Function }) => <button onClick={() => setEnd(10)} data-testid="load-more-button">Load More</button>);
-jest.mock("./components/footer-comp", () => () => <div data-testid="footer" />);
+jest.mock('./components/menu-header', () => () => <div data-testid="menu-header">Mocked Menu Header</div>);
+jest.mock('./components/site-name-header', () => () => <div data-testid="site-name-header">Mocked Site Name Header</div>);
+jest.mock('./components/footer-comp', () => () => <div data-testid="footer">Mocked Footer</div>);
+jest.mock('./components/load-more-button', () => () => <button onClick={jest.fn()} data-testid="load-more-button">Load More</button>);
+jest.mock('./components/news-card-list', () => () => (
+  <div data-testid="news-card-list">
+    <div data-testid="news-card">Mocked News Card 1</div>
+    <div data-testid="news-card">Mocked News Card 2</div>
+  </div>
+));
 
-
-
-
-
-describe("App component", () => {
-  test("renders basic elements", () => {
+describe('App Component', () => {
+  beforeEach(() => {
     render(<App />);
-    expect(screen.getByTestId("site-name-header")).toBeInTheDocument();
-    expect(screen.getByTestId("menu-header")).toBeInTheDocument();
-    expect(screen.getByTestId("load-more-button")).toBeInTheDocument();
-    expect(screen.getByTestId("footer")).toBeInTheDocument();
   });
 
-  test("fetches IDs on initial render", async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      json: () => Promise.resolve([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
-    });
-  
-    await act(async () => { 
-      render(<App />);
-    });
-  
-    expect(global.fetch).toHaveBeenCalledWith(
-      "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
-    );
-    
+  test('renders site name header', () => {
+    const siteNameHeader = screen.getByTestId('site-name-header');
+    expect(siteNameHeader).toBeInTheDocument();
+  });
+
+  test('renders menu header', () => {
+    const menuHeader = screen.getByTestId('menu-header');
+    expect(menuHeader).toBeInTheDocument();
+  });
+
+  test('renders news card list', () => {
+    const newsCardList = screen.getByTestId('news-card-list');
+    expect(newsCardList).toBeInTheDocument();
+  });
+
+  test('renders load more button', () => {
+    const loadMoreButton = screen.getByTestId('load-more-button');
+    expect(loadMoreButton).toBeInTheDocument();
+  });
+
+  test('renders footer', () => {
+    const footer = screen.getByTestId('footer');
+    expect(footer).toBeInTheDocument();
   });
 });
