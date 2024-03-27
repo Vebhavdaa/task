@@ -46,6 +46,7 @@ describe("AppContextProvider", () => {
 
     const contextCheck = getByTestId("context-check");
     expect(contextCheck).toBeInTheDocument();
+    expect(contextCheck.textContent).toBe("Context is provided");
   });
 
   test("fetches IDs and data on initialization", async () => {
