@@ -41,6 +41,7 @@ describe("React App Tests", () => {
         "rgb(251, 201, 27)"
       );
     });
+    cy.get('[data-testid="news-card"]').should("have.length", 5);
   });
 
   it("VerifyPastButtonClick", () => {
@@ -70,14 +71,32 @@ describe("React App Tests", () => {
         "rgb(251, 201, 27)"
       );
     });
+    cy.get('[data-testid="news-card"]').should("have.length", 5);
   });
 
   it("VerifyLoadMoreButton", () => {
-    cy.get('[data-testid="load-more-button"]').click();
-    cy.get('[data-testid="news-card"]').should("have.length", 10);
+    cy.get('[data-testid="news-card"]')
+      .its("length")
+      .then((initialLength) => {
+        cy.get('[data-testid="load-more-button"]').click();
+        cy.get('[data-testid="news-card"]')
+          .its("length")
+          .should("eq", initialLength + 5);
+      });
   });
 
   it("VerifyNewsCardNavigation", () => {
-    cy.get('[data-testid="news-card"]').first().click();
+    cy.get('[data-testid="news-link"]')
+      .should("have.attr", "target", "_blank")
+      .then(($link) => {
+        const href = $link.attr("href");
+        if (href) {
+          cy.request(href).then((response) => {
+            expect(response.status).to.equal(200);
+          });
+        } else {
+          throw new Error("Link href attribute is undefined");
+        }
+      });
   });
 });
