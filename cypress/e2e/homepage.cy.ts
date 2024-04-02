@@ -29,9 +29,7 @@ describe("React App Tests", () => {
     );
     cy.get('[data-testid="new-button"]').click();
     cy.wait("@getNewStories").then((interception) => {
-      if (interception.response) {
-        expect(interception.response.statusCode).to.eq(200);
-      }
+      expect(interception.response.statusCode).to.eq(200);
       expect(interception.request.url).to.eq(
         "https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty"
       );
@@ -59,9 +57,7 @@ describe("React App Tests", () => {
     cy.get('[data-testid="new-button"]').click();
     cy.get('[data-testid="past-button"]').click();
     cy.wait("@getTopStories").then((interception) => {
-      if (interception.response) {
-        expect(interception.response.statusCode).to.eq(200);
-      }
+      expect(interception.response.statusCode).to.eq(200);
       expect(interception.request.url).to.eq(
         "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
       );
@@ -90,13 +86,9 @@ describe("React App Tests", () => {
       .should("have.attr", "target", "_blank")
       .then(($link) => {
         const href = $link.attr("href");
-        if (href) {
-          cy.request(href).then((response) => {
-            expect(response.status).to.equal(200);
-          });
-        } else {
-          throw new Error("Link href attribute is undefined");
-        }
+        cy.request(href).then((response) => {
+          expect(response.status).to.equal(200);
+        });
       });
   });
 });
